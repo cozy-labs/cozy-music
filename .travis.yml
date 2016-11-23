@@ -31,4 +31,4 @@ script:
   - npm run build
   - npm run test
 after_success:
-  - test $TRAVIS_BRANCH = "master" && npm run deploy
+  - test $TRAVIS_BRANCH = "master" -o $TRAVIS_BRANCH = "development" && npm run deploy
