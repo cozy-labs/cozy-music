@@ -104,9 +104,11 @@ const ControlsExtended = Mn.ItemView.extend({
     changeVolWheel(e) {
         const wheelStep = 0.05;
         let volume = application.appState.get('currentVolume', volume);
-        if (e.originalEvent.wheelDelta > 0 ) {
+        const delta = e.originalEvent.wheelDelta || -e.originalEvent.deltaY;
+
+        if (delta > 0 ) {
             volume += wheelStep;
-        } else {
+        } else if (delta < 0) {
             volume -= wheelStep;
         }
 
