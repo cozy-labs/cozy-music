@@ -51,12 +51,12 @@ const ControlsExtended = Mn.ItemView.extend({
         let repeat = application.appState.get('repeat');
         switch (repeat) {
             case 'false':
-                application.appState.set('repeat', 'track');
-                break;
-            case 'track':
                 application.appState.set('repeat', 'playlist');
                 break;
             case 'playlist':
+                application.appState.set('repeat', 'track');
+                break;
+            case 'track':
                 application.appState.set('repeat', 'false');
                 break;
         }
