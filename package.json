@@ -44,6 +44,7 @@
     "lodash": "4.6.1",
     "npm-run-all": "1.7.0",
     "postcss-loader": "0.8.1",
+    "standard": "^8.6.0",
     "style-loader": "0.13.0",
     "stylus": "0.52.4",
     "stylus-loader": "2.3.1",
@@ -59,10 +60,11 @@
     "deploy": "git-directory-deploy --username music-autodeploy --email no-reply@cozy.io --directory public/ --branch build --repo=https://$GITHUB_TOKEN@github.com/cozy-labs/cozy-music.git",
     "tx": "tx pull --all || true",
     "postbuild": "npm run copy:manifest",
-    "prebuild": "npm-run-all clean tx",
+    "prebuild": "npm-run-all lint clean tx",
     "prewatch": "npm run clean",
     "test": "true",
-    "watch": "webpack --display-modules --display-chunks --watch"
+    "watch": "webpack --display-modules --display-chunks --watch",
+    "lint": "standard"
   },
   "cozy-permissions": {
     "CozyInstance": {
@@ -83,5 +85,8 @@
     "Binary": {
       "description": "Access your binary music files to stream them."
     }
+  },
+  "standard": {
+    "globals": [ "t", "_", "$", "emit" ]
   }
 }
