@@ -1,14 +1,15 @@
-var path = require('path');
+/* eslint-disable */
+var path = require('path')
 
-var webpack = require('webpack');
+var webpack = require('webpack')
 
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var CopyPlugin        = require('copy-webpack-plugin');
-var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var CopyPlugin = require('copy-webpack-plugin')
+var BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 
 // use the `OPTIMIZE` env VAR to switch from dev to production build
-var optimize = process.env.OPTIMIZE === 'true';
+var optimize = process.env.OPTIMIZE === 'true'
 
 /**
  * Loaders used by webpack
@@ -18,34 +19,34 @@ var optimize = process.env.OPTIMIZE === 'true';
  * customized via PostCSS
  * - images are cache-busted in production build
  */
-var cssOptions = optimize? 'css?-svgo&-autoprefixer&-mergeRules!postcss':'css';
+var cssOptions = optimize ? 'css?-svgo&-autoprefixer&-mergeRules!postcss' : 'css'
 var loaders = [
-    {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel', // 'babel-loader' is also a legal name to reference
-        query: {
-            presets: ['es2015']
-        }
-    },
-    {
-        test: /\.jst$/,
-        loader: 'underscore'
-    },
-    {
-        test: /\.json$/,
-        loader: 'json'
-    },
-    {
-        test: /\.styl$/,
-        loader: ExtractTextPlugin.extract('style', cssOptions + '!stylus')
-    },
-    {
-        test: /\.svg$/,
-        include: /icons/,
-        loader: 'svg-sprite'
+  {
+    test: /\.js$/,
+    exclude: /node_modules/,
+    loader: 'babel', // 'babel-loader' is also a legal name to reference
+    query: {
+      presets: ['es2015']
     }
-];
+  },
+  {
+    test: /\.jst$/,
+    loader: 'underscore'
+  },
+  {
+    test: /\.json$/,
+    loader: 'json'
+  },
+  {
+    test: /\.styl$/,
+    loader: ExtractTextPlugin.extract('style', cssOptions + '!stylus')
+  },
+  {
+    test: /\.svg$/,
+    include: /icons/,
+    loader: 'svg-sprite'
+  }
+]
 
 /**
  * Configure Webpack's plugins to tweaks outputs:
@@ -65,54 +66,54 @@ var loaders = [
  *   http://localhost:3000, proxified to the server app port
  */
 var plugins = [
-    new ExtractTextPlugin(optimize? 'app.[hash].css' : 'app.css'),
-    new CopyPlugin([
-        {
-            from: 'vendor/fonts',
-            to: 'fonts'
-        },
-        {
-            from: 'vendor/app-icon.svg',
-            to: 'app-icon.svg'
-        }
-    ]),
-    new HtmlWebpackPlugin({
-        template: './app/index.ejs',
-        inject: false,
-        minify: {
-            collapseWhitespace: true,
-            collapseBooleanAttributes: true
-        }
-    }),
-    new webpack.ProvidePlugin({
-        $: "jquery",
-        _: "underscore"
-    })
-];
+  new ExtractTextPlugin(optimize ? 'app.[hash].css' : 'app.css'),
+  new CopyPlugin([
+    {
+      from: 'vendor/fonts',
+      to: 'fonts'
+    },
+    {
+      from: 'vendor/app-icon.svg',
+      to: 'app-icon.svg'
+    }
+  ]),
+  new HtmlWebpackPlugin({
+    template: './app/index.ejs',
+    inject: false,
+    minify: {
+      collapseWhitespace: true,
+      collapseBooleanAttributes: true
+    }
+  }),
+  new webpack.ProvidePlugin({
+    $: 'jquery',
+    _: 'underscore'
+  })
+]
 
 if (optimize) {
-    plugins = plugins.concat([
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.optimize.UglifyJsPlugin({
-            mangle: true,
-            compress: {
-                warnings: false
-            },
-        }),
-        new webpack.DefinePlugin({
-            __SERVER__:      !optimize,
-            __DEVELOPMENT__: !optimize,
-            __DEVTOOLS__:    !optimize
-        })
-    ]);
+  plugins = plugins.concat([
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      mangle: true,
+      compress: {
+        warnings: false
+      }
+    }),
+    new webpack.DefinePlugin({
+      __SERVER__: !optimize,
+      __DEVELOPMENT__: !optimize,
+      __DEVTOOLS__: !optimize
+    })
+  ])
 } else {
-    plugins = plugins.concat([
-        new BrowserSyncPlugin({
-            proxy: 'http://localhost:' + (process.env.PORT || 9104) + '/',
-            open: false
-        })
-    ]);
+  plugins = plugins.concat([
+    new BrowserSyncPlugin({
+      proxy: 'http://localhost:' + (process.env.PORT || 9104) + '/',
+      open: false
+    })
+  ])
 }
 
 /**
@@ -122,9 +123,9 @@ if (optimize) {
  * - mqpacker to bring together all MQ rule's set
  */
 var postcss = [
-    require('autoprefixer')(['last 2 versions']),
-    require('css-mqpacker')
-];
+  require('autoprefixer')(['last 2 versions']),
+  require('css-mqpacker')
+]
 
 /**
  * Webpack config
@@ -133,19 +134,19 @@ var postcss = [
  * - cache-bust assets when build for production
  */
 module.exports = {
-    entry: './app/initialize',
-    output: {
-        path: 'public',
-        filename: optimize? 'app.[hash].js' : 'app.js',
-    },
-    resolve: {
-        extensions: ['', '.js', '.sass', '.jst', '.json']
-    },
-    debug: !optimize,
-    devtool: 'source-map',
-    module: {
-        loaders: loaders
-    },
-    plugins: plugins,
-    postcss: postcss
-};
+  entry: './app/initialize',
+  output: {
+    path: 'public',
+    filename: optimize ? 'app.[hash].js' : 'app.js'
+  },
+  resolve: {
+    extensions: ['', '.js', '.sass', '.jst', '.json']
+  },
+  debug: !optimize,
+  devtool: 'source-map',
+  module: {
+    loaders: loaders
+  },
+  plugins: plugins,
+  postcss: postcss
+}
