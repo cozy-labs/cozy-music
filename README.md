@@ -1,4 +1,6 @@
-# [Cozy](https://cozy.io) Music
+:warning: __This repository is no longer maintained. It was developed for the first version of the Cozy personal cloud server. We are actively developping a new, improved, version: Cozy V3. You can follow the development [here](https://github.com/cozy/cozy-stack), to test it and report bugs.__
+
+# \[DEPRECATED\] [Cozy](https://cozy.io) Music
 
 [![Build Status](https://travis-ci.org/cozy-labs/cozy-music.svg?branch=master)](https://travis-ci.org/cozy-labs/cozy-music)
 
